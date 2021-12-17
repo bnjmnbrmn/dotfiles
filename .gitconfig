@@ -1,8 +1,8 @@
 [user]
-	name = 
-	email = 
+	name = Benjamin Berman
+  email = baberman@mmm.com
 [credential]
-	helper = cache
+  helper = cache
 [color]
 	ui = auto
 [alias]
@@ -13,3 +13,39 @@
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	type = cat-file -t
 	dump = cat-file -p
+	root = !pwd
+  sm = submodule
+  smuir = submodule update --init --recursive 
+  pushr = push --recurse-submodules=on-demand
+  cloner = clone --recurse-submodules -j8
+  cor = checkout --recurse-submodules
+  pullr = pull --recurse-submodules
+  far = fetch --all --recurse-submodules
+
+#https://stackoverflow.com/questions/1838873/visualizing-branch-topology-in-git
+  lg1s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+  lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+  lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+
+  lg2s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+
+  lg3s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+  lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)' --all
+
+  lg4s = log --oneline --graph --decorate
+  lg4 = log --oneline --graph --all --decorate
+
+
+#[filesystem "Azul Systems, Inc.|1.8.0_222|/dev/sda1"]
+  #timestampResolution = 1001 microseconds
+  #minRacyThreshold = 4998 microseconds
+[core]
+	autocrlf = input
+	whitespace = cr-at-eol
+[cola]
+	spellcheck = false
+[status]
+	submodulesummary = 1
+[push]
+	recurseSubmodules = check

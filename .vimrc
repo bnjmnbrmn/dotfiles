@@ -13,8 +13,6 @@ syntax on
 " and show line numbers
 set number
 
-set background=dark
-colorscheme distinguished
 
 " make vim try to detect file types and load plugins for them
 filetype on
@@ -103,9 +101,9 @@ set wildmode=list:longest
 set scrolloff=3
 
 " indentation
+"hset autoindent
+set cindent
 set expandtab
-set autoindent
-set smartindent
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
@@ -137,7 +135,7 @@ Plugin 'vim-scripts/l9'
 "Plugin 'vim-scripts/fuzzyfinder'
 "Plugin 'wincent/command-t'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'lokaltog/vim-easymotion'
+"Plugin 'lokaltog/vim-easymotion'
 Plugin 'tpope/vim-surround'
 Plugin 'qpkorr/vim-bufkill' "This seems to be causing problems for command-t
 "<leader>b
@@ -160,30 +158,32 @@ Plugin 'hail2u/vim-css3-syntax'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_java_checkers=[]
+"Plugin 'Raimondi/delimitMate'
+"Plugin 'scrooloose/syntastic'
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['jshint']
+"let g:syntastic_java_checkers=[]
 
-Plugin 'Valloric/YouCompleteMe'
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
-set completeopt-=preview
-Plugin 'ternjs/tern_for_vim'
+"Plugin 'Valloric/YouCompleteMe'
+"let g:ycm_add_preview_to_completeopt=0
+"let g:ycm_confirm_extra_conf=0
+"set completeopt-=previe w
+"Plugin 'ternjs/tern_for_vim'
 "Plugin 'flowtype/vim-flow'
+
+Plugin 'Lokaltog/vim-distinguished'
 
 " end plugin definition
 call vundle#end()  " required for vundle
 
-set omnifunc=syntaxcomplete#Complete
-set completeopt=longest,menuone
+"set omnifunc=syntaxcomplete#Complete
+"set completeopt=longest,menuone
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
@@ -215,16 +215,19 @@ set laststatus=2
 
 "nnoremap <silent> <leader>b :CommandTMRU<CR>
 
-let g:UltiSnipsExpandTrigger="<c-e>"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+"let g:UltiSnipsExpandTrigger="<c-e>"
+"let g:UltiSnipsJumpForwardTrigger="<c-f>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 nnoremap <leader>q :bp<cr>:bd #<cr>
 
-let g:tern_map_keys=1
-let g:tern_map_prefix='<leader>'
+"let g:tern_map_keys=1
+"let g:tern_map_prefix='<leader>'
 
-au BufRead,BufNewFile .tern-project setfiletype json
+"au BufRead,BufNewFile .tern-project setfiletype json
+"
+set background=dark
+colorscheme distinguished

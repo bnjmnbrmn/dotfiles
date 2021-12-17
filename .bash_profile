@@ -1,3 +1,3 @@
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH="/home/bnjmnbrmn/.ebcli-virtual-env/executables:$PATH"
+#export PATH=/home/bnjmnbrmn/.pyenv/versions/3.7.2/bin:$PATH

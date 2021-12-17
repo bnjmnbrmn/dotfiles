@@ -37,13 +37,13 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color|xterm-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -58,7 +58,18 @@ fi
 
 
 if [ "$color_prompt" = yes ]; then
+  if [ -f ~/.config/git/git-prompt.sh ]; then
+    . ~/.config/git/git-prompt.sh
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    export GIT_PS1_SHOWUPSTREAM=auto
+    export GIT_PS1_SHOWCOLORHINTS=1 
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")\$ '
+    PROMPT_COMMAND='__git_ps1 "${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]" " \\\$ " '
+  else
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -90,6 +101,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias kp='kpcli --kdb'
+alias gvov='kpcli --kdb ~/od3m/babermanMModalDatabase.kdbx --command "xp /Database2/MModal/General/vault\ of\ vaults"'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -114,17 +128,53 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export NVM_DIR="~/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#export NVM_DIR="${HOME}/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+#export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export EDITOR=vim
 
-if [[ "$TERM" != "screen-256color" ]]
+if [[ "$TERM" != "screen-256color" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]
 then
   tmux attach-session -t "$USER" || tmux new-session -s "$USER"
   exit
 fi
+
+export PATH=$PATH:/usr/local/bin:/home/bnjmnbrmn/.local/bin:/home/bnjmnbrmn/bin
+
+#eval "$(stack --bash-completion-script stack)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/bnjmnbrmn/.sdkman"
+[[ -s "/home/bnjmnbrmn/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bnjmnbrmn/.sdkman/bin/sdkman-init.sh"
+
+alias jsonpretty='python -m json.tool | pygmentize -l json'
+
+#complete -C $(which aws_completer) aws
+
+
+
+#complete -C /home/bnjmnbrmn/bin/terraform terraform
+#source <(kubectl completion bash)
+#alias k=kubectl
+#complete -F __start_kubectl k
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+#if command -v pyenv 1>/dev/null 2>&1; then
+#  eval "$(pyenv init -)"
+#fi
+
+
+#export PATH="$HOME/kafka_2.13-2.6.0/bin:$PATH"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+alias s4j8='. ~/bin/s4j8'
+
+#eval "$(gh completion -s bash)"
+
