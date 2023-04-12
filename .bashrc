@@ -138,7 +138,7 @@ fi
 
 export EDITOR=vim
 
-if [[ "$TERM" != "screen-256color" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]
+if [[ -z "$INSIDE_EMACS" ]] && [[ "$TERM" != "screen-256color" ]] && [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]
 then
   tmux attach-session -t "$USER" || tmux new-session -s "$USER"
   exit
@@ -178,3 +178,46 @@ alias s4j8='. ~/bin/s4j8'
 
 #eval "$(gh completion -s bash)"
 
+#GDK_SCALE=2.0
+#GDK_DPI_SCALE=.75
+
+wslg_dpi_scale() {
+    local dpi_scale WindowMetricsAppliedDPI
+    dpi_scale="${GDK_DPI_SCALE:-${QT_SCALE_FACTOR:-}}"
+    if [[ -z "${dpi_scale:-}" ]] ; then
+        WindowMetricsAppliedDPI=$("/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" "(Get-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop\\WindowMetrics').AppliedDPI")
+        WindowMetricsAppliedDPI=${WindowMetricsAppliedDPI%$'\r'}
+        dpi_scale=$(bc <<<"scale=2; $WindowMetricsAppliedDPI / 96")
+    fi
+
+    export GDK_DPI_SCALE=${GDK_DPI_SCALE:-$dpi_scale}
+    export GTK_SCALE=${GTK_SCALE:-$dpi_scale}
+
+    # https://doc.qt.io/qt-5/highdpi.html
+    # export QT_AUTO_SCREEN_SCALE_FACTOR=${QT_AUTO_SCREEN_SCALE_FACTOR:-1}
+    # export QT_ENABLE_HIGHDPI_SCALING=${QT_ENABLE_HIGHDPI_SCALING:-1}
+    export QT_SCALE_FACTOR=${QT_SCALE_FACTOR:-$GDK_DPI_SCALE}
+
+    # export MESA_D3D12_DEFAULT_ADAPTER_NAME="Intel(R) UHD Graphics 770"
+}
+
+[ -d /mnt/wslg/runtime-dir ] && wslg_dpi_scale
+. ~/.kind-completion
+
+export PATH=$PATH:~/.emacs.d/bin
+
+em () {
+   emacsclient -c -a '' "$@" &
+}
+
+#alias emacs="emacsclient -c -a 'emacs'"
+
+export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+[ -f "/home/bnjmnbrmn/.ghcup/env" ] && source "/home/bnjmnbrmn/.ghcup/env" # ghcup-env
+
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+
+export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
+#export DISPLAY=host.docker.internal:0
